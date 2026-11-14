@@ -35,6 +35,10 @@
   if (!header || !footer) return;
   header.innerHTML = `<header><div class="wrap"><a class="brand" href="index.html">ZB / DIGITAL STUDIO</a><nav aria-label="Navigation">${nav.map(([url,fr,en,id]) => `<a href="${url}" data-fr="${fr}" data-en="${en}"${document.body.dataset.page === id ? ' aria-current="page"' : ''}>${fr}</a>`).join('')}<label class="visually-hidden" for="language">Language</label><select class="language-picker" id="language">${languages.map(([code,label]) => `<option value="${code}">${label}</option>`).join('')}</select></nav></div></header>`;
   footer.innerHTML = '<footer><div class="wrap"><span>© Zakaria Benlacheheb · Digital Studio</span><a href="plan-du-site.html" data-fr="Plan du site" data-en="Site map">Plan du site</a></div></footer>';
+  if (document.body.dataset.page === 'home') {
+    const lead = document.querySelector('.hero .lead');
+    if (lead) lead.insertAdjacentHTML('afterend', '<p class="availability" data-fr="Basé en Thaïlande · Disponible pour des missions freelance et remote à l’international." data-en="Based in Thailand · Available for international freelance and remote work.">Basé en Thaïlande · Disponible pour des missions freelance et remote à l’international.</p>');
+  }
   let lang = 'fr'; try { lang = localStorage.getItem('zb-site-lang') || 'fr'; } catch (_) {}
   if (!languages.some(([code]) => code === lang)) lang = 'fr';
   const translate = (fr,en) => { const index = keys.indexOf(fr); return lang === 'fr' ? fr : translations[lang]?.[index] || detailTranslations[lang]?.[fr] || en || fr; };
