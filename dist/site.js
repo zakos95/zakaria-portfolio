@@ -1,4 +1,4 @@
-(() => {
+(() => { try {
   const languages = [['fr','Français'],['en','English'],['ar','العربية'],['es','Español'],['pt','Português'],['de','Deutsch'],['it','Italiano'],['th','ไทย'],['ru','Русский'],['zh','中文'],['ja','日本語'],['ko','한국어'],['hi','हिन्दी']];
   const nav = [['index.html','Accueil','Home','home'],['services.html','Services','Services','services'],['projets.html','Projets','Projects','projets'],['outils.html','Outils','Tools','outils'],['contact.html','Contact','Contact','contact']];
   const keys = ['Accueil','Services','Projets','Outils','Contact','Plan du site','Des idées aux outils utiles.','Je conçois des interfaces web, des automatisations et des outils de traitement de données pour donner une forme concrète aux projets.','Explorer les projets ↗','Me contacter','CE QUE JE PROPOSE','De la conception à la livraison.','Tous les services →','Des outils à essayer.','Découvrir les outils ↗','Un besoin, une solution adaptée.','Discuter de votre projet ↗','Du concept à l’usage.','PROJETS ET DÉMONSTRATIONS','Parlons de votre projet.','Décrivez votre besoin, le résultat souhaité et votre échéance.','Écrire un email ↗','Téléphone','Appeler ↗','Plan du site.'];
@@ -15,6 +15,9 @@
     ko:['홈','서비스','프로젝트','도구','문의','사이트맵','아이디어를 유용한 도구로.','웹 인터페이스, 자동화, 데이터 도구를 만들어 프로젝트를 구체적인 결과로 바꿉니다.','프로젝트 보기 ↗','문의하기','제공 서비스','기획부터 납품까지.','모든 서비스 →','사용해 볼 도구.','도구 보기 ↗','필요에 맞는 솔루션.','프로젝트 상담 ↗','개념에서 활용까지.','프로젝트 및 데모','프로젝트를 이야기해 봅시다.','필요 사항, 원하는 결과와 마감일을 알려 주세요.','이메일 보내기 ↗','전화','전화하기 ↗','사이트맵.'],
     hi:['होम','सेवाएँ','प्रोजेक्ट','टूल्स','संपर्क','साइट मैप','विचारों से उपयोगी टूल्स तक।','मैं वेब इंटरफेस, ऑटोमेशन और डेटा टूल्स बनाता हूँ जो प्रोजेक्ट को ठोस परिणाम में बदलते हैं।','प्रोजेक्ट देखें ↗','संपर्क करें','मैं क्या देता हूँ','विचार से डिलीवरी तक।','सभी सेवाएँ →','आज़माने योग्य टूल्स।','टूल्स देखें ↗','आपकी जरूरत के लिए सही समाधान।','अपने प्रोजेक्ट पर बात करें ↗','अवधारणा से उपयोग तक।','प्रोजेक्ट और डेमो','आपके प्रोजेक्ट पर बात करें।','अपनी जरूरत, अपेक्षित परिणाम और समयसीमा बताइए।','ईमेल भेजें ↗','फ़ोन','कॉल करें ↗','साइट मैप।']
   };
+  const favicon = document.querySelector('link[rel~="icon"]') || document.createElement('link');
+  favicon.rel = 'icon'; favicon.type = 'image/svg+xml'; favicon.href = 'favicon.svg';
+  if (!favicon.parentNode) document.head.append(favicon);
   const header = document.getElementById('site-header'), footer = document.getElementById('site-footer');
   if (!header || !footer) return;
   header.innerHTML = `<header><div class="wrap"><a class="brand" href="index.html">ZB / DIGITAL STUDIO</a><nav aria-label="Navigation">${nav.map(([url,fr,en,id]) => `<a href="${url}" data-fr="${fr}" data-en="${en}"${document.body.dataset.page === id ? ' aria-current="page"' : ''}>${fr}</a>`).join('')}<label class="visually-hidden" for="language">Language</label><select class="language-picker" id="language">${languages.map(([code,label]) => `<option value="${code}">${label}</option>`).join('')}</select></nav></div></header>`;
@@ -25,4 +28,4 @@
   const setLanguage = (next) => { lang = next; document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.querySelectorAll('[data-fr][data-en]').forEach((element) => { element.textContent = translate(element.dataset.fr,element.dataset.en); }); document.getElementById('language').value = lang; try { localStorage.setItem('zb-site-lang',lang); } catch (_) {} };
   document.getElementById('language').addEventListener('change',(event) => setLanguage(event.target.value));
   setLanguage(lang);
-})();
+} catch (error) { console.error('Portfolio navigation failed to initialize.', error); } })();
